@@ -2,7 +2,7 @@
 
 Cross-platform cli file remover written in [Go](https://go.dev/) 1.19.
 
-Mainly written to easily delete files in Windows.
+Mainly written to replace wtf `del|rmdir /s /q` for deleting files in Windows.
 
 ## Usage
 
