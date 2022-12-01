@@ -11,14 +11,14 @@ Cross-platform cli file remover written in [Go](https://go.dev/) 1.19.
 
 ## Examples
 
-    remove file1 file2 dir/dir1
+    remove file1 file2 dir/dir1/*.tmp
 
 ### `files.txt`
 
 ```
 file1
 file2
-dir/dir1
+dir/dir1/*.tmp
 ```
 
     remove --input files.txt
