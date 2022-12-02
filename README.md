@@ -33,7 +33,7 @@ dir/dir1/*.tmp
 
 Only needed for embedding a resource icon on Windows:
 
-    go get github.com/akavel/rsrc
+    go install github.com/akavel/rsrc@latest
     rsrc -ico go.ico
     make build
 
