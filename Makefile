@@ -10,9 +10,9 @@ run:
 
 compile:
         go get -u -v all
-        GOOS=linux GOARCH=arm go build -ldflags "-s -w" -o bin/main-linux-arm .
-        GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" -o bin/main-linux-arm64 .
-        GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -o bin/main-windows-amd64 .
-        GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o bin/app-amd64-macos .
+        GOOS=linux GOARCH=arm go build -ldflags "-s -w" -o bin/remove-linux-arm .
+        GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o bin/remove-linux-amd64 .
+        GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -o bin/remove-windows-amd64 .
+        GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o bin/remove-macos-amd64 .
 
 all: icon build
