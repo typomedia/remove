@@ -9,16 +9,19 @@ import (
 	"strings"
 )
 
-const info = `Usage: remove [OPTION]... [FILE]...
+const version = "1.0"
+
+const usage = `Usage: remove [OPTION]... [FILE]...
   -h, --help
-  -i, --input file     Line separated list of files
-  [FILE]...            File or directory to remove
+  -i, --input file     line separated list of files
+  -v, --verbose        output what is being done
+  [FILE]...            file or directory to remove
 
 Example: remove --input list.txt
 `
 
 func main() {
-	println("Remove by Philipp Speck [Version 1.0]")
+	println("remove by Philipp Speck [Version " + version + "]")
 	println("Copyright (C) 2022 Typomedia Foundation.")
 	println()
 
@@ -30,9 +33,10 @@ func main() {
 		"",
 		"Line separated file list")
 	flag.BoolP("help", "h", false, "")
+	verbose := flag.BoolP("verbose", "v", false, "")
 	flag.Usage = func() {
 		//flag.PrintDefaults()
-		fmt.Print(info) // override default usage
+		fmt.Print(usage) // override default usage
 	}
 	flag.Parse()
 
@@ -44,7 +48,7 @@ func main() {
 
 	if len(args) > 0 {
 		for _, path := range args {
-			remove(path)
+			remove(path, *verbose)
 		}
 	}
 
@@ -59,14 +63,14 @@ func main() {
 		scanner.Split(bufio.ScanLines)
 
 		for scanner.Scan() {
-			remove(scanner.Text())
+			remove(scanner.Text(), *verbose)
 		}
 
 		file.Close()
 	}
 }
 
-func remove(path string) {
+func remove(path string, verbose bool) {
 	path = strings.Replace(path, "/", string(filepath.Separator), -1)
 
 	files, err := filepath.Glob(path)
@@ -75,7 +79,9 @@ func remove(path string) {
 	}
 
 	for _, file := range files {
-		fmt.Println("Remove: " + file)
+		if verbose {
+			fmt.Println("remove " + file)
+		}
 		if err := os.RemoveAll(file); err != nil {
 			fmt.Println(err)
 		}
