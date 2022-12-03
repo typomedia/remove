@@ -75,7 +75,7 @@ func remove(path string) {
 	}
 
 	for _, file := range files {
-		fmt.Println("Remove: " + path)
+		fmt.Println("Remove: " + file)
 		if err := os.RemoveAll(file); err != nil {
 			fmt.Println(err)
 		}
