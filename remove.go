@@ -14,6 +14,7 @@ const version = "1.0"
 const usage = `Usage: remove [OPTION]... [FILE]...
   -h, --help
   -i, --input file     line separated list of files
+  -r, --recursive      remove files and folders recursively
   -v, --verbose        output what is being done
   [FILE]...            file or directory to remove
 
@@ -34,6 +35,7 @@ func main() {
 		"Line separated file list")
 	flag.BoolP("help", "h", false, "")
 	verbose := flag.BoolP("verbose", "v", false, "")
+	recursive := flag.BoolP("recursive", "r", false, "")
 	flag.Usage = func() {
 		//flag.PrintDefaults()
 		fmt.Print(usage) // override default usage
@@ -48,7 +50,7 @@ func main() {
 
 	if len(args) > 0 {
 		for _, path := range args {
-			remove(path, *verbose)
+			remove(path, *recursive, *recursive)
 		}
 	}
 
@@ -63,14 +65,14 @@ func main() {
 		scanner.Split(bufio.ScanLines)
 
 		for scanner.Scan() {
-			remove(scanner.Text(), *verbose)
+			remove(scanner.Text(), true, *verbose)
 		}
 
 		file.Close()
 	}
 }
 
-func remove(path string, verbose bool) {
+func remove(path string, recursive bool, verbose bool) {
 	path = strings.Replace(path, "/", string(filepath.Separator), -1)
 
 	files, err := filepath.Glob(path)
@@ -82,8 +84,14 @@ func remove(path string, verbose bool) {
 		if verbose {
 			fmt.Println("remove " + file)
 		}
-		if err := os.RemoveAll(file); err != nil {
-			fmt.Println(err)
+		if recursive {
+			if err := os.RemoveAll(file); err != nil {
+				fmt.Println(err)
+			}
+		} else {
+			if err := os.Remove(file); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 }
