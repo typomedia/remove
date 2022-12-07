@@ -8,8 +8,10 @@ Mainly written to replace wtf `del|rmdir /s /q` for easi[l]ly deleting files in 
 
     Usage: remove [OPTION]... [FILE]...
     -h, --help
-    -i, --input file     Line separated list of files
-    [FILE]...            File or directory to remove
+    -i, --input file     line separated list of files
+    -r, --recursive      remove files and folders recursively
+    -v, --verbose        output what is being done
+    [FILE]...            file or directory to remove
 
 ## Examples
 
